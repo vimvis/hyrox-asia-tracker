@@ -359,4 +359,8 @@ selectDivision.addEventListener('change', renderTable);
 selectGender.addEventListener('change', renderTable);
 selectAge.addEventListener('change', renderTable);
 
-document.addEventListener('DOMContentLoaded', loadData);
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadData);
+} else {
+    loadData();
+}
