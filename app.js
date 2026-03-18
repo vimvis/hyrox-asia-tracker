@@ -1,7 +1,8 @@
 let rawData = [];
+let selectedLocations = new Set();
 
 // DOM Elements
-const selectLocation = document.getElementById('location');
+const locationTagsContainer = document.getElementById('location-tags');
 const selectDivision = document.getElementById('division');
 const selectGender = document.getElementById('gender');
 const selectAge = document.getElementById('age');
@@ -59,8 +60,25 @@ function populateFilters() {
             element.appendChild(option);
         });
     };
+    // Render Location Tags
+    locationTagsContainer.innerHTML = '';
+    const allTag = document.createElement('div');
+    allTag.className = 'tag active';
+    allTag.textContent = 'All Locations';
+    allTag.dataset.val = 'All';
+    allTag.addEventListener('click', () => toggleLocation('All', allTag));
+    locationTagsContainer.appendChild(allTag);
 
-    createOptions(locations, selectLocation);
+    locations.forEach(loc => {
+        if(!loc) return;
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.textContent = loc;
+        tag.dataset.val = loc;
+        tag.addEventListener('click', () => toggleLocation(loc, tag));
+        locationTagsContainer.appendChild(tag);
+    });
+
     createOptions(divisions, selectDivision);
     createOptions(genders, selectGender);
     createOptions(ages, selectAge);
@@ -70,15 +88,40 @@ function populateFilters() {
     if (genders.length > 0) selectGender.value = genders[0];
 }
 
+function toggleLocation(val, element) {
+    if (val === 'All') {
+        selectedLocations.clear();
+        Array.from(locationTagsContainer.children).forEach(tag => tag.classList.remove('active'));
+        element.classList.add('active');
+    } else {
+        // Remove All Locations active state
+        locationTagsContainer.children[0].classList.remove('active');
+        
+        if (selectedLocations.has(val)) {
+            selectedLocations.delete(val);
+            element.classList.remove('active');
+        } else {
+            selectedLocations.add(val);
+            element.classList.add('active');
+        }
+        
+        // If none selected, revert to All Locations
+        if (selectedLocations.size === 0) {
+            locationTagsContainer.children[0].classList.add('active');
+        }
+    }
+    renderTable();
+}
+
 // Render data based on filters
 function renderTable() {
-    const locFilter = selectLocation.value;
     const divFilter = selectDivision.value;
     const genFilter = selectGender.value;
     const ageFilter = selectAge.value;
 
     let filtered = rawData.filter(d => {
-        return (locFilter === 'All' || d.event_location === locFilter) &&
+        const matchesLoc = selectedLocations.size === 0 || selectedLocations.has(d.event_location);
+        return matchesLoc &&
                (divFilter === 'All' || d.division === divFilter) &&
                (genFilter === 'All' || d.gender === genFilter) &&
                (ageFilter === 'All' || d.ageGroup === ageFilter);
@@ -113,7 +156,6 @@ function renderTable() {
 }
 
 // Event Listeners
-selectLocation.addEventListener('change', renderTable);
 selectDivision.addEventListener('change', renderTable);
 selectGender.addEventListener('change', renderTable);
 selectAge.addEventListener('change', renderTable);

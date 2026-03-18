@@ -122,6 +122,36 @@ select {
     cursor: pointer;
 }
 
+.tag-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.3rem;
+}
+
+.tag {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.tag:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.tag.active {
+    background: rgba(250, 204, 21, 0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+}
+
 select:focus {
     border-color: var(--accent);
     box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.2);
