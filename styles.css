@@ -386,6 +386,20 @@ tbody tr.clickable {
     display: none !important;
 }
 
+.scroll-hint {
+    display: none;
+    font-size: 0.8rem;
+    color: var(--accent-hover);
+    margin-bottom: 0.8rem;
+    text-align: right;
+    animation: fadePulse 2s infinite;
+}
+
+@keyframes fadePulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
@@ -425,4 +439,5 @@ tbody tr.clickable {
         border-radius: 20px;
     }
     .action-btn { width: 100%; font-size: 0.85rem; padding: 0.6rem; }
+    .scroll-hint { display: block; }
 }
