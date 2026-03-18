@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HYROX Asia Tracker</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -46,6 +47,11 @@
                     <option value="All">All Ages</option>
                 </select>
             </div>
+            
+            <div class="filter-group" style="grid-column: 1 / -1; margin-top: 0.5rem;">
+                <label for="search-input">Search Athlete</label>
+                <input type="text" id="search-input" placeholder="Search by name... (e.g. Kim)" class="search-box">
+            </div>
         </section>
 
         <section class="results glass-panel">
@@ -58,6 +64,7 @@
                 <table id="rankings-table">
                     <thead>
                         <tr>
+                            <th><input type="checkbox" id="select-all" disabled></th>
                             <th>Rank</th>
                             <th>Athlete</th>
                             <th>Nat.</th>
