@@ -401,26 +401,28 @@ tbody tr.clickable {
 }
 
 @media (max-width: 768px) {
-    .app-container { 
-        padding: 1rem; 
+    .app-container { padding: 0.8rem; }
+    header h1 { font-size: 1.8rem; }
+    header p { font-size: 0.95rem; }
+    header .hyrox-logo { max-width: 150px; margin-bottom: 1rem; }
+    
+    .filters { grid-template-columns: 1fr; gap: 0.8rem; }
+    .search-box { font-size: 0.95rem; padding: 0.6rem; }
+    .tag { font-size: 0.75rem; padding: 0.3rem 0.8rem; }
+    
+    th, td { padding: 0.6rem 0.4rem; font-size: 0.8rem; white-space: nowrap; }
+    .metric-rank { width: 22px; height: 22px; font-size: 0.75rem; }
+    
+    .modal-content { padding: 2rem 1rem 1rem; border-radius: 12px; max-height: 85vh; }
+    .modal-close { top: 10px; right: 15px; font-size: 1.5rem; }
+    
+    .compare-bar {
+        width: 92%;
+        bottom: 15px;
+        padding: 0.8rem;
+        flex-direction: column;
+        gap: 0.5rem;
+        border-radius: 20px;
     }
-    header h1 { 
-        font-size: 2rem; 
-    }
-    header .hyrox-logo {
-        max-width: 180px;
-    }
-    .filters { 
-        grid-template-columns: 1fr; 
-        gap: 1rem;
-    }
-    th, td { 
-        padding: 0.75rem 0.5rem; 
-        font-size: 0.85rem; 
-    }
-    .metric-rank {
-        width: 24px;
-        height: 24px;
-        font-size: 0.8rem;
-    }
+    .action-btn { width: 100%; font-size: 0.85rem; padding: 0.6rem; }
 }
