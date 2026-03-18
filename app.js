@@ -1,10 +1,3 @@
-window.onerror = function(msg, url, line, col, error) {
-    document.body.innerHTML += `<div style="color:red; font-size: 20px; z-index:9999; position:absolute; top: 0; left: 0; background: white; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.5); width: 100%;"><b>JS ERROR:</b> ${msg} at line ${line}</div>`;
-};
-window.addEventListener("unhandledrejection", function(e) {
-    document.body.innerHTML += `<div style="color:red; font-size: 20px; z-index:9999; position:absolute; top: 80px; left: 0; background: white; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.5); width: 100%;"><b>PROMISE ERROR:</b> ${e.reason}</div>`;
-});
-
 let rawData = [];
 let selectedLocations = new Set();
 let selectedAthletes = new Map(); // for comparison {index -> data}
