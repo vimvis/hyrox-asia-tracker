@@ -85,8 +85,28 @@
                 <p>Loading records...</p>
             </div>
         </section>
+
+        <!-- Action Bar & Stats Button -->
+        <div class="stats-action-container">
+            <button id="btn-stats" class="action-btn alt" style="width: 100%;">📊 View Distribution Stats for Current Filter</button>
+        </div>
     </div>
 
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div id="modal-content" class="modal-content glass-panel">
+            <button id="modal-close" class="modal-close">&times;</button>
+            <div id="modal-body">
+                <canvas id="chart-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Compare Action Bar -->
+    <div id="compare-bar" class="compare-bar hidden glass-panel">
+        <span id="compare-count">0 athletes selected</span>
+        <button id="btn-compare" class="action-btn">Compare Split Times</button>
+    </div>
 
     <footer>
         <img src="f45_jamsil_logo.png" alt="F45 Jamsil Logo" class="f45-logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/150x50/1e293b/ffffff?text=F45+JAMSIL';">
