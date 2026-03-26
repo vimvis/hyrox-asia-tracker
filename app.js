@@ -22,6 +22,7 @@ const chartCanvas = document.getElementById('chart-canvas');
 const compareBar = document.getElementById('compare-bar');
 const compareCountTxt = document.getElementById('compare-count');
 const btnCompare = document.getElementById('btn-compare');
+const btnResetCompare = document.getElementById('btn-reset-compare');
 const btnStats = document.getElementById('btn-stats');
 
 // Format minutes (float) into MM:SS string
@@ -265,6 +266,12 @@ function viewProfile(athlete) {
 }
 
 // 2. Compare Radar Chart
+btnResetCompare.addEventListener('click', () => {
+    selectedAthletes.clear();
+    compareBar.classList.add('hidden');
+    renderTable();
+});
+
 btnCompare.addEventListener('click', () => {
     if(selectedAthletes.size < 1) return;
     openModal();
