@@ -280,7 +280,7 @@ btnCompare.addEventListener('click', () => {
     let i = 0;
     selectedAthletes.forEach((athlete) => {
         datasets.push({
-            label: athlete.name,
+            label: `${athlete.name} (${athlete.event_location})`,
             data: SPLIT_KEYS.map(s => athlete[s.key] || 0),
             backgroundColor: colors[i],
             borderColor: borderColors[i],
