@@ -25,6 +25,14 @@ const btnCompare = document.getElementById('btn-compare');
 const btnResetCompare = document.getElementById('btn-reset-compare');
 const btnStats = document.getElementById('btn-stats');
 
+// Calculator Elements
+const calcTimeInput = document.getElementById('calc-time');
+const calcDivisionSelect = document.getElementById('calc-division');
+const calcGenderSelect = document.getElementById('calc-gender');
+const calcAgeSelect = document.getElementById('calc-age');
+const btnCalculate = document.getElementById('btn-calculate');
+const calcResultsContainer = document.getElementById('calc-results');
+
 // Format minutes (float) into MM:SS string
 function formatTimeStr(minutesFloat) {
     if (!minutesFloat || isNaN(minutesFloat)) return "N/A";
@@ -94,6 +102,11 @@ function populateFilters() {
     createOptions(divisions, selectDivision);
     createOptions(genders, selectGender);
     createOptions(ages, selectAge);
+    
+    // Populate calculator filters as well
+    createOptions(divisions, calcDivisionSelect);
+    createOptions(genders, calcGenderSelect);
+    createOptions(ages, calcAgeSelect);
     
     if (divisions.length > 0) selectDivision.value = divisions[0];
     if (genders.length > 0) selectGender.value = genders[0];
@@ -365,6 +378,101 @@ btnStats.addEventListener('click', () => {
 selectDivision.addEventListener('change', renderTable);
 selectGender.addEventListener('change', renderTable);
 selectAge.addEventListener('change', renderTable);
+
+// ========================================================= 
+// RANK CALCULATOR LOGIC
+// ========================================================= 
+
+function parseMMSS(timeStr) {
+    if (!timeStr) return null;
+    const parts = timeStr.trim().split(':');
+    if (parts.length === 2) {
+        return (parseFloat(parts[0]) * 60) + parseFloat(parts[1]);
+    } else if (parts.length === 3) { // HH:MM:SS
+        return (parseFloat(parts[0]) * 3600) + (parseFloat(parts[1]) * 60) + parseFloat(parts[2]);
+    }
+    return parseFloat(timeStr) * 60; // fallback to considering it raw minutes
+}
+
+btnCalculate.addEventListener('click', () => {
+    const timeStr = calcTimeInput.value;
+    const inputSeconds = parseMMSS(timeStr);
+    
+    if (!inputSeconds || isNaN(inputSeconds)) {
+        alert("Please enter a valid time (e.g. 1:15:30 or 75:30)");
+        return;
+    }
+    
+    const divFilter = calcDivisionSelect.value;
+    const genFilter = calcGenderSelect.value;
+    const ageFilter = calcAgeSelect.value;
+    
+    if (divFilter === 'All' || genFilter === 'All' || ageFilter === 'All') {
+        alert("Please select a specific Division, Gender, and Age Group for accurate ranking.");
+        return;
+    }
+    
+    // Filter by the selected categories (across all locations)
+    const categoryData = rawData.filter(d => 
+        d.division === divFilter && 
+        d.gender === genFilter && 
+        d.ageGroup === ageFilter &&
+        d.seconds > 0 && d.seconds !== Infinity
+    );
+    
+    if (categoryData.length === 0) {
+        calcResultsContainer.innerHTML = '<p style="color:var(--text-muted); grid-column:1/-1;">No records found for this category combination.</p>';
+        calcResultsContainer.classList.remove('hidden');
+        return;
+    }
+    
+    // Group by location
+    const locationStats = {};
+    categoryData.forEach(d => {
+        if (!locationStats[d.event_location]) {
+            locationStats[d.event_location] = [];
+        }
+        locationStats[d.event_location].push(d.seconds);
+    });
+    
+    // Calculate rank per location
+    calcResultsContainer.innerHTML = '';
+    const locations = Object.keys(locationStats).sort();
+    
+    locations.forEach(loc => {
+        const times = locationStats[loc];
+        times.sort((a, b) => a - b);
+        
+        let rank = 1;
+        for (let i = 0; i < times.length; i++) {
+            if (times[i] < inputSeconds) {
+                rank++;
+            } else {
+                break;
+            }
+        }
+        
+        const total = times.length;
+        const topPercent = ((rank/total)*100).toFixed(1);
+        
+        const card = document.createElement('div');
+        card.className = 'rank-card glass-panel';
+        card.style.padding = '1rem';
+        card.style.display = 'flex';
+        card.style.flexDirection = 'column';
+        card.style.gap = '0.5rem';
+        card.style.background = 'rgba(15, 23, 42, 0.5)';
+        
+        card.innerHTML = `
+            <h3 style="font-size: 1.1rem; color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${loc}">${loc}</h3>
+            <div style="font-size: 1.2rem; font-weight: 800;">Rank <span style="color: white; font-size: 1.4rem;">${rank}</span> <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: 400;">/ ${total}</span></div>
+            <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 600;">Top ${topPercent}%</div>
+        `;
+        calcResultsContainer.appendChild(card);
+    });
+    
+    calcResultsContainer.classList.remove('hidden');
+});
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', loadData);

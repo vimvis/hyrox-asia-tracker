@@ -88,6 +88,38 @@
             </div>
         </section>
 
+        <!-- Rank Calculator Section -->
+        <section class="calculator-section glass-panel" style="margin-top: 2rem;">
+            <div class="results-header" style="margin-bottom: 0.5rem;">
+                <h2>Simulate My Rank</h2>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">Enter your finish time and category to see how you would rank across all Asian events.</p>
+            
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="calc-time">Total Time (MM:SS)</label>
+                    <input type="text" id="calc-time" placeholder="e.g. 1:15:30 or 75:30" class="search-box">
+                </div>
+                <div class="filter-group">
+                    <label for="calc-division">Division</label>
+                    <select id="calc-division"></select>
+                </div>
+                <div class="filter-group">
+                    <label for="calc-gender">Gender</label>
+                    <select id="calc-gender"></select>
+                </div>
+                <div class="filter-group">
+                    <label for="calc-age">Age Group</label>
+                    <select id="calc-age"></select>
+                </div>
+            </div>
+            <button id="btn-calculate" class="action-btn" style="margin-top: 1rem; width: 100%;">Calculate My Rank 🏆</button>
+            
+            <div id="calc-results" class="calc-results-container hidden" style="margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <!-- Rank cards injected here -->
+            </div>
+        </section>
+
         <!-- Action Bar & Stats Button -->
         <div class="stats-action-container">
             <button id="btn-stats" class="action-btn alt" style="width: 100%;">📊 View Distribution Stats for Current Filter</button>
