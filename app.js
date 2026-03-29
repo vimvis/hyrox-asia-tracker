@@ -165,12 +165,17 @@ function renderTable() {
         
         const isChecked = selectedAthletes.has(row._id) ? 'checked' : '';
         
+        let displayName = row.name || 'N/A';
+        if ((row.division === 'doubles' || row.division === 'pro_doubles') && displayName.includes(',')) {
+            displayName = displayName.split(',').map(n => n.trim()).join('<br><span style="color: var(--accent); font-size: 0.85rem; margin-right: 4px;">&amp;</span>');
+        }
+        
         tr.innerHTML = `
             <td class="checkbox-col" onclick="event.stopPropagation()">
                 <input type="checkbox" class="athlete-cb" data-id="${row._id}" ${isChecked}>
             </td>
             <td><span class="metric-rank">${rank}</span></td>
-            <td style="font-weight:600">${row.name || 'N/A'}</td>
+            <td class="name-cell">${displayName}</td>
             <td>${row.nationality || '-'}</td>
             <td>${row.event_location}</td>
             <td>${row.division}</td>

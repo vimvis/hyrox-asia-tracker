@@ -244,6 +244,14 @@ td {
     white-space: nowrap;
 }
 
+.name-cell {
+    font-weight: 600;
+    max-width: 15rem;
+    white-space: normal;
+    overflow-wrap: break-word;
+    line-height: 1.3;
+}
+
 tr {
     transition: background 0.2s;
 }
