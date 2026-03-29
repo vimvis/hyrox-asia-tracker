@@ -25,6 +25,12 @@ const btnCompare = document.getElementById('btn-compare');
 const btnResetCompare = document.getElementById('btn-reset-compare');
 const btnStats = document.getElementById('btn-stats');
 
+// Views & Navigation Elements
+const mainDashboardView = document.getElementById('main-dashboard-view');
+const calculatorView = document.getElementById('calculator-view');
+const btnOpenCalculator = document.getElementById('btn-open-calculator');
+const btnBackDashboard = document.getElementById('btn-back-dashboard');
+
 // Calculator Elements
 const calcTimeInput = document.getElementById('calc-time');
 const calcDivisionSelect = document.getElementById('calc-division');
@@ -383,6 +389,19 @@ btnStats.addEventListener('click', () => {
 selectDivision.addEventListener('change', renderTable);
 selectGender.addEventListener('change', renderTable);
 selectAge.addEventListener('change', renderTable);
+
+// View Navigation
+btnOpenCalculator.addEventListener('click', () => {
+    mainDashboardView.classList.add('hidden');
+    calculatorView.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+btnBackDashboard.addEventListener('click', () => {
+    calculatorView.classList.add('hidden');
+    mainDashboardView.classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 // ========================================================= 
 // RANK CALCULATOR LOGIC

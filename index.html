@@ -19,7 +19,8 @@
             <p>Analyze results from the 10 most recent Asian events.</p>
         </header>
 
-        <section class="filters glass-panel">
+        <div id="main-dashboard-view">
+            <section class="filters glass-panel">
             <div class="filter-group" style="grid-column: 1 / -1;">
                 <label>Locations (Multiple Selection)</label>
                 <div id="location-tags" class="tag-group">
@@ -52,10 +53,14 @@
                 <label for="search-input">Search Athlete</label>
                 <input type="text" id="search-input" placeholder="Search by name... (e.g. Kim)" class="search-box">
             </div>
-        </section>
+            </section>
 
-        <section class="results glass-panel">
-            <div class="results-header">
+            <div style="margin-bottom: 2rem; margin-top: -1rem;">
+                <button id="btn-open-calculator" class="action-btn" style="width: 100%; box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);">🏆 Simulate My Global Rank</button>
+            </div>
+
+            <section class="results glass-panel">
+                <div class="results-header">
                 <h2>Leaderboard</h2>
                 <span id="result-count">0 athletes found</span>
             </div>
@@ -88,8 +93,15 @@
             </div>
         </section>
 
+        <!-- Action Bar & Stats Button -->
+        <div class="stats-action-container">
+            <button id="btn-stats" class="action-btn alt" style="width: 100%;">📊 View Distribution Stats for Current Filter</button>
+        </div>
+        </div>
+
         <!-- Rank Calculator Section -->
-        <section class="calculator-section glass-panel" style="margin-top: 2rem;">
+        <section id="calculator-view" class="calculator-section glass-panel hidden" style="margin-top: 0;">
+            <button id="btn-back-dashboard" class="action-btn alt" style="margin-bottom: 1.5rem;">&larr; Back to Leaderboard</button>
             <div class="results-header" style="margin-bottom: 0.5rem;">
                 <h2>Simulate My Rank</h2>
             </div>
@@ -119,11 +131,6 @@
                 <!-- Rank cards injected here -->
             </div>
         </section>
-
-        <!-- Action Bar & Stats Button -->
-        <div class="stats-action-container">
-            <button id="btn-stats" class="action-btn alt" style="width: 100%;">📊 View Distribution Stats for Current Filter</button>
-        </div>
     </div>
 
     <!-- Modals -->
